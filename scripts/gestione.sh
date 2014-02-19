@@ -4,8 +4,7 @@
 #Informazioni sintetiche: Il programma gestisce un database con immissione, modifica ed eleminazioni di campi e record. Inoltre cerca i dati per record e crea codice QR V-Card, sempre per singolo record.
 #Nome programma: gestione.sh
 #Versione Programma: 2.1
-#Autore: Iannoccaro Luigi, con la collaborazione assidua e preziosa di Testa Massimo.
-
+#Autore: Iannoccaro Luigi, Toshidex, Massimo Testa.
 
 QRENCODE="qrencode"
 
