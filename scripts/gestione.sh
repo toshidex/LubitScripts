@@ -77,7 +77,6 @@ NOME1=$(echo "$RISULTATO" | awk -F":" '{print $2}')
 
 function IMMISSIONE(){
 
-
 	forms=$(zenity --forms \
 		--add-entry=Cognome \
 		--add-entry=Nome \
@@ -98,7 +97,6 @@ function IMMISSIONE(){
                    --title="Informazione" \
                    --text="<b>Questo utente esiste già!</b>"
                    #Reset variabili
-                   unset cognome nome forms
 	           IMMISSIONE
  	fi                  
 	
@@ -108,144 +106,13 @@ function IMMISSIONE(){
 #Sed, prima cancella eventuali righe vuote o che iniziano con "mancante", e poi le righe con soli ":"
 
      sed -i '/^$/d' $FICHERO/lista.txt
-     sed -i '/^mancante/d' $FICHERO/lista.txt
      sed -i '/^:/d' $FICHERO/lista.txt
-
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-##Inseriamo i dati degli utenti nel database, lista.txt, attraverso  ">>"
-#function IMMISSIONE(){
-
-
-#cognome=$(zenity --entry \
-#                  --width=300 \
-#                  --height=100 \
-#                  --title="Cognome" \
-#                  --text="Inserisci il cognome. Esempio. Rossi")
-
-##Se salta il cognome o qualsiasi altro dato, il programma aggiunge la stringa "mancante"
-
-#if [ -z $cognome ]; then
-#    cognome=mancante
-#else
-#    cognome=$(echo $cognome | tr ' ' '_')
-#fi
-
-
-#nome=$(zenity --entry \
-#                  --width=300 \
-#                  --height=100 \
-#                  --title="Nome" \
-#                  --text="Inserisci il nome. Esempio. Mario")
-
-#if [ -z $nome ]; then 
-#   nome=mancante
-#else
-#   nome=$(echo $nome | tr ' ' '_')
-#fi
-
-
-
-
-#protocollo=$(zenity --entry \
-#                  --width=300 \
-#                  --height=100 \
-#                  --title="Protocollo" \
-#                  --text="Inserisci il numero di protocollo. Esempio. 56890")
-
-#if [ -z $protocollo ]; then 
-#   protocollo=mancante 
-#else
-#   protocollo=$(echo $protocollo | tr ' ' '_')
-#fi
-
-
-#telefono=$(zenity --entry \
-#                  --width=300 \
-#                  --height=100 \
-#                  --title="Telefono" \
-#                  --text="Inserisci il numero di telefono. Esempio 098094949X")
-
-#if [ -z $telefono ]; then 
-#    telefono=mancante
-#else
-#    telefono=$(echo $telefono | tr ' ' '_')
-#fi
-
-#cellulare=$(zenity --entry \
-#                  --width=300 \
-#                  --height=100 \
-#                  --title="Cellulare" \
-#                  --text="Inserisci il numero di cellulare. Esempio. 444546543")
-
-#if [ -z $cellulare ]; then 
-#   cellulare=mancante
-#else
-#   cellulare=$(echo $cellulare | tr ' ' '_')
-#fi
-
-#email=$(zenity --entry \
-#                  --width=300 \
-#                  --height=100 \
-#                  --title="E-mail" \
-#                  --text="Inserisci l'indirizzo e-mail. Esempio. mariorossi@cot.it")
-
-#if [ -z $email ]; then 
-#   email=mancante
-#else
-#   email=$(echo $email | tr ' ' '_') 
-#fi
-
-#controlla se l'utente con quel nome e cognome è presente già nella list
-
-#if cat $FICHERO/lista.txt | grep -i "$cognome" | grep -i "$nome"; then
-#                   echo "FOUND" 
-#                   zenity --info \
-#                   --width=300 \
-#                   --height=130 \
-#                   --title="Informazione" \
-#                   --text="<b>Questo utente esiste già!</b>"
-#                   #Reset variabili
-#                   unset cognome nome protocollo telefono cellulare email
-#                   
-#else 
-#    echo "NOT FOUND"
-#fi
-#
-#nome_array=( "$cognome" "$nome" "$protocollo" "$telefono" "$cellulare" "$email" )
-#
-#
-#
-#echo ${nome_array[@]} | awk 'BEGIN{OFS=":"}{print $1,$2,$3,$4,$5,$6}' >> $FICHERO/lista.txt
-#
-#
-##Sed, prima cancella eventuali righe vuote o che iniziano con "mancante", e poi le righe con soli ":"
-#
-#     sed -i '/^$/d' $FICHERO/lista.txt
-#     sed -i '/^mancante/d' $FICHERO/lista.txt
-#     sed -i '/^:/d' $FICHERO/lista.txt
-#
-#
-#}
-###################################### FINE SEZIONE IMMISSIONE ###########################################
-
 
 
 ########################################### CERCA DATI ###################################################
 
 function TROVA() {
-#RICERCA
 
 
 DATO=$(zenity --entry \
@@ -268,10 +135,20 @@ cat $FICHERO/lista.txt | grep -i "$DATO" | awk 'BEGIN {
   print "\n""Cognome: " $1,"Nome: "$2,"Protocollo: " $3,"Telefono: "$4,"Cellulare: " $5,"E-mail: "$6, "\n"
 }'> $FICHERO/ricerca
 
-zenity --text-info \
-       --width=300 \
-       --height=400 \
-       --filename="$FICHERO/ricerca"
+
+
+if [[ $(cat $FICHERO/ricerca) == "" ]]; then
+	zenity --warning --text="Nessun dato trovato!"
+	OPZIONE
+else
+	zenity --text-info \
+      	     --width=300 \
+  	     --height=400 \
+	     --filename="$FICHERO/ricerca"
+	OPZIONE
+fi
+
+
 }
 ######################################## FINE SEZIONE CERCA ##################################################
 
