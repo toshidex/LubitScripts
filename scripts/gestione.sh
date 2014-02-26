@@ -107,6 +107,7 @@ function IMMISSIONE(){
 
      sed -i '/^$/d' $FICHERO/lista.txt
      sed -i '/^:/d' $FICHERO/lista.txt
+	
 }
 
 
@@ -175,6 +176,9 @@ echo "numero degli utenti registrati: $numero_record" >> $FICHERO/report.txt
 echo ""
 
 echo "Il file report.txt lo trovi nella seguente cartella: $FICHERO" >> $FICHERO/report.txt
+
+#zenity --list --text "ciao" --width=700 --height=300 --column=Cognome --column=Nome --column=Protocollo --column=Telefono --column=Cellulare --column=Email $(for i in $(cat ~/Script/.GESTIONE/lista.txt); do echo $i | awk -F":" '{print $1,$2,$3,$4,$5,$6}'; done) --print-column=ALL
+
 
 for linea in $(cat $FICHERO/lista1.txt)  
       
@@ -397,7 +401,8 @@ function OPZIONE(){
  
             case $opzione in 
 
-                 1)IMMISSIONE 
+                 1)IMMISSIONE
+		   OPZIONE
   
                  ;;       
          
